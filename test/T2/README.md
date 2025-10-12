@@ -18,7 +18,7 @@
 
 ## 下面是待检测的蓝色箭头灯条原图：
 
-![原图示例](assets/input_example.png)
+![原图示例](assets/img2.png)
 
 ---
 
@@ -26,7 +26,7 @@
 
 v1 版本使用 `boundingRect` 方法生成水平矩形框，速度快，但对斜放箭头框可能不准。
 
-![v1 检测结果](assets/output_v1.png)
+![v1 检测结果](assets/arrow_detect_v1_20251012_145828.png)
 
 >可见有一定误差的绿色轮廓线和水平红色框选
 
@@ -38,7 +38,7 @@ v1 版本使用 `boundingRect` 方法生成水平矩形框，速度快，但对�
 v2 版本先用 `approxPolyDP` 对轮廓做多边形近似，再生成矩形框。  
 对不规则轮廓更精确，但速度略慢。
 
-![v2 检测结果](assets/output_v2.png)
+![v2 检测结果](assets/arrow_detect_v3_20251012_145841.png)
 
 >可见拟合良好的绿色轮廓线和水平红色框选
 
@@ -49,7 +49,7 @@ v2 版本先用 `approxPolyDP` 对轮廓做多边形近似，再生成矩形框�
 v3 版本使用 `minAreaRect` 最小旋转矩形，可匹配任意角度的箭头灯条。  
 这是最精确的版本，适合复杂场景。
 
-![v3 检测结果](assets/output_v3.png)
+![v3 检测结果](assets/arrow_poly_v2_20251012_145835.png)
 
 >可见拟合良好和具有旋转角度的红色框选
 
