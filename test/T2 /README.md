@@ -16,6 +16,45 @@
 
 ---
 
+## 下面是待检测的蓝色箭头灯条原图：
+
+![原图示例](assets/input_example.png)
+
+---
+
+## v1 检测结果 - 水平矩形框（Bounding Rect）
+
+v1 版本使用 `boundingRect` 方法生成水平矩形框，速度快，但对斜放箭头框可能不准。
+
+![v1 检测结果](assets/output_v1.png)
+
+>可见有一定误差的绿色轮廓线和水平红色框选
+
+
+---
+
+## v2 检测结果 - 多边形近似 + 矩形框
+
+v2 版本先用 `approxPolyDP` 对轮廓做多边形近似，再生成矩形框。  
+对不规则轮廓更精确，但速度略慢。
+
+![v2 检测结果](assets/output_v2.png)
+
+>可见拟合良好的绿色轮廓线和水平红色框选
+
+---
+
+## v3 检测结果 - 最小旋转矩形
+
+v3 版本使用 `minAreaRect` 最小旋转矩形，可匹配任意角度的箭头灯条。  
+这是最精确的版本，适合复杂场景。
+
+![v3 检测结果](assets/output_v3.png)
+
+>可见拟合良好和具有旋转角度的红色框选
+
+---
+
 ## 共通处理流程
 1. **读取图像**  
 ```python
@@ -71,7 +110,7 @@ x, y, w, h = cv2.boundingRect(approx)
 cv2.rectangle(result_img, (x, y), (x+w, y+h), (0,0,255), 2)
 ```
 
-###v3 - 最小旋转矩形
+### v3 - 最小旋转矩形
 ```python
 rect = cv2.minAreaRect(cnt)
 (x, y), (w, h), angle = rect
@@ -86,16 +125,16 @@ cv2.drawContours(result_img, [box], 0, (0,0,255), 2)
 ## 优化点总结
 
 * 1.颜色分割优化
-** HSV阈值可通过可视化工具调整，以覆盖不同亮度和环境光条件。
+  - HSV阈值可通过可视化工具调整，以覆盖不同亮度和环境光条件。
 
 * 2.噪声过滤
-** 使用面积过滤和形态学闭操作，可减少小杂点干扰。
+  - 使用面积过滤和形态学闭操作，可减少小杂点干扰。
 
 * 3.框选方式优化
-** v3 的最小旋转矩形可准确匹配斜向目标，适合复杂场景。
+  - v3 的最小旋转矩形可准确匹配斜向目标，适合复杂场景。
 
 * 4.结果可视化与保存
-** 文件命名加时间戳，避免覆盖，并便于批量处理。
+  - 文件命名加时间戳，避免覆盖，并便于批量处理。
 
 ---
 
@@ -106,6 +145,6 @@ from detect_blue_light_arrow_v3 import detect_blue_light_arrow
 mask, result_img, results = detect_blue_light_arrow("img2.png")
 ```
 * 输出结果为：
-** mask：二值掩膜
-** result_img：带矩形或多边形标注的图像
-** results：检测到的箭头区域信息
+  - mask：二值掩膜
+  - result_img：带矩形或多边形标注的图像
+  - results：检测到的箭头区域信息
