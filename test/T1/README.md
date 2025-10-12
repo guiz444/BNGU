@@ -48,7 +48,7 @@ print("精确 HSV 上限:", upper_hsv)
 
 #### GIF 演示
 
-![演示 GIF](assets/1exact_20251012_171401.gif)
+![演示 GIF](assets/1exact_20251012_181909.gif)
 
 ---
 
@@ -75,7 +75,7 @@ print("容差 HSV 上限:", upper_hsv)
 
 #### GIF 演示
 
-![演示 GIF](assets/1estimate_20251012_171242.gif)
+![演示 GIF](assets/1estimate_20251012_181657.gif)
 
 
 ---
