@@ -147,26 +147,37 @@ else:
 
 ## 两个工具的主要代码差异
 
-| 工具 | 容差处理 | 适用场景 | 说明 | 核心代码差异 |
-|------|-----------|-----------|------|--------------|
-| `HSV_exact` | 无容差 | 颜色严格要求的场景 | 直接使用点击点的最小/最大 HSV 值生成掩膜 | ```python
+| 工具 | 容差处理 | 适用场景 | 说明 |
+|------|-----------|-----------|------|
+| `HSV_exact` | 无容差 | 颜色严格要求的场景 | 直接使用点击点的最小/最大 HSV 值生成掩膜 |
+| `HSV_estimate` | H±10, S±40, V±40 | 颜色存在光照变化或细节难选的场景 | 自动在 HSV 范围上增加容差，提高掩膜稳定性和覆盖度 |
+
+### 核心代码对比
+
+#### HSV_exact 核心代码
+
+```python
 # Exact 不增加容差
 lower_hsv = hsv_array.min(axis=0)
 upper_hsv = hsv_array.max(axis=0)
 mask = cv2.inRange(img_hsv, lower_hsv, upper_hsv)
-``` |
-| `HSV_estimate` | H±10, S±40, V±40 | 颜色存在光照变化或细节难选的场景 | 自动在 HSV 范围上增加容差，提高掩膜稳定性和覆盖度 | ```python
+```
+
+#### HSV_estimate 核心代码
+```python
 # Estimating 增加容差
 tol = np.array([10, 40, 40])
 lower_hsv = np.clip(hsv_array.min(axis=0) - tol, 0, [179, 255, 255])
 upper_hsv = np.clip(hsv_array.max(axis=0) + tol, 0, [179, 255, 255])
 mask = cv2.inRange(img_hsv, lower_hsv, upper_hsv)
-``` |
+```
+### 关键差异点：
 
-**关键差异点：**  
+* HSV_estimate 在返回 HSV 范围时会增加预设容差，HSV_exact 不增加。
 
-1. `HSV_estimate` 在返回 HSV 范围时会增加预设容差，`HSV_exact` 不增加。  
-2. 其他流程完全一致：多点点击选择颜色 → 显示红色圆点 → 实时显示掩膜覆盖 → 返回 HSV 范围。
+* 其他流程完全一致：多点点击选择颜色 → 显示红色圆点 → 实时显示掩膜覆盖 → 返回 HSV 范围。
+
+---
 
 ## 返回值说明
 
@@ -181,5 +192,6 @@ mask = cv2.inRange(img_hsv, lower_hsv, upper_hsv)
 * Saturation 容差：±40
 * Value 容差：±40
 * 可在代码中修改 tol 数组自定义容差。
+  
 ---
 
