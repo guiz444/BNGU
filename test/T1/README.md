@@ -142,6 +142,7 @@ else:
 
 > 由图可知，对于选取的图片，使用容差方法能够获得更优的 HSV 匹配效果。
 > 相较于精确选点方法，容差调整能够提升掩膜选择的稳定性与覆盖度。
+
 ---
 
 ## 两个工具的主要代码差异
@@ -160,14 +161,12 @@ tol = np.array([10, 40, 40])
 lower_hsv = np.clip(hsv_array.min(axis=0) - tol, 0, [179, 255, 255])
 upper_hsv = np.clip(hsv_array.max(axis=0) + tol, 0, [179, 255, 255])
 mask = cv2.inRange(img_hsv, lower_hsv, upper_hsv)
-``` 
+``` |
 
 **关键差异点：**  
 
 1. `HSV_estimate` 在返回 HSV 范围时会增加预设容差，`HSV_exact` 不增加。  
 2. 其他流程完全一致：多点点击选择颜色 → 显示红色圆点 → 实时显示掩膜覆盖 → 返回 HSV 范围。
-
----
 
 ## 返回值说明
 
