@@ -50,6 +50,7 @@ def process_video(video_path):
       - 空格键暂停/继续
       - S 键保存当前检测帧（带时间戳，不退出）
       - ESC 键退出
+      - 输出 MP4 视频
     """
     cap = cv2.VideoCapture(video_path)
 
@@ -57,12 +58,24 @@ def process_video(video_path):
         print("无法打开视频文件或摄像头，请检查路径。")
         return
 
+    # 获取视频信息
+    w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    fps = fps if fps > 0 else 25
+
     print("视频已打开：")
     print("   [空格] 暂停/继续播放")
     print("   [S] 保存当前检测帧")
-    print("   [ESC] 退出程序")
+    print("   [ESC] 提前退出程序")
 
-    paused = False  # 是否暂停
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    out_name = f"output_arrow_detect_v3_{timestamp}.mp4"
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    out = cv2.VideoWriter(out_name, fourcc, fps, (w, h))
+    print(f"正在录制输出视频（如果提前退出将只有运行部分）：{out_name}")
+
+    paused = False
 
     while True:
         if not paused:
@@ -71,11 +84,13 @@ def process_video(video_path):
                 print("视频播放结束或无法读取帧。")
                 break
 
-            # 调用 v3 检测函数
+            # 调用检测函数
             mask, result_frame, results = detect_blue_light_arrow_v3(frame)
 
-        cv2.imshow("Blue Light Detection (v3)", result_frame)
+            # 写入输出视频
+            out.write(result_frame)
 
+        cv2.imshow("Blue Light Detection (v3)", result_frame)
         key = cv2.waitKey(30) & 0xFF
 
         if key == 27:  # ESC 键退出
@@ -83,8 +98,8 @@ def process_video(video_path):
             break
 
         elif key == ord('s'):  # S 键保存帧
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            save_name = f"arrow_detect_v3_{timestamp}.png"
+            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+            save_name = f"arrow_detect_v3_{ts}.png"
             cv2.imwrite(save_name, result_frame)
             print(f"已保存检测帧：{save_name}")
 
@@ -96,7 +111,9 @@ def process_video(video_path):
                 print("▶ 继续播放...")
 
     cap.release()
+    out.release()
     cv2.destroyAllWindows()
+    print(f"视频已保存至：{out_name}")
 
 
 
