@@ -46,6 +46,7 @@ pip install opencv-python numpy imageio
 
 ---
 
+
 ### 1. `camera_capture.py`
 
 * 功能：打开默认摄像头，按 **空格** 保存当前帧（带时间戳），按 **ESC** 退出。
@@ -55,6 +56,12 @@ pip install opencv-python numpy imageio
 ### 2. `imagepoints.py`
 
 * 功能：实现 `detect_black_shapes_on_yellow()`、`sort_squares_corners()`、`filter_jumping_squares()`。
+* 主要特性：
+  ** 使用 HSV 空间分割黄色与黑色区域
+  ** 支持帧间跳动过滤与面积差异检测
+  ** 可处理图片路径或视频帧输入
+  ** 输出矩形框与排序后的方块坐标
+
 * 已修正与说明：
 
   * `detect_black_shapes_on_yellow()` 支持输入为图片路径或 ndarray，并返回 `(result_img, squares)`。
@@ -118,8 +125,9 @@ python pose_estimation.py
 ## GIF 演示
 ### 坐标绘制效果
 ![坐标绘制效果](output_result_20251016_130043.gif)
-* 同时程序自动保存一帧框选图，判断角点是否符合
+
 ### 视频帧框选效果
+* 同时程序自动保存一帧框选图，判断角点是否符合
 ![视频帧框选效果图](first_frame_detected.png)
 
 ---
