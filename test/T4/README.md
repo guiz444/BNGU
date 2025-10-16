@@ -1,6 +1,9 @@
-# 🎯 Black Shape 3D Pose Detection System
+#  Black Shape 3D Pose Detection System
 
-本项目基于 **OpenCV + Python**，实现了从视频或摄像头画面中检测黄色背景上的黑色方块，并通过 `solvePnP` 计算物体的三维位姿，在画面中实时绘制 3D 坐标轴。
+##本项目基于 **OpenCV + Python**，实现了从视频或摄像头画面中检测黄色背景上的黑色方块，并通过 `solvePnP` 计算物体的三维位姿，在画面中实时绘制 3D 坐标轴。
+
+##目标
+![金矿石](2d.png)
 > 注意此文件中的HSV分割范围由T1中的exact tool函数提取
 > ![分割结果](HSV.png)
 ---
@@ -15,7 +18,7 @@
 
 ---
 
-## 🧩 文件结构
+## 文件结构
 
 ```
 project_root/
@@ -38,11 +41,15 @@ pip install opencv-python numpy imageio
 ```
 ---
 
-## 文件说明（第三个文件 `pose_estimation.py`为重点）
+## 文件说明
+
+---
 
 ### 1. `camera_capture.py`
 
 * 功能：打开默认摄像头，按 **空格** 保存当前帧（带时间戳），按 **ESC** 退出。
+
+---
 
 ### 2. `imagepoints.py`
 
@@ -55,6 +62,8 @@ pip install opencv-python numpy imageio
 
 * 框选目标，可用于检测角点是否可以准确输出
   * ![框选效果](yellow_squares_20251015_193540.png)
+
+---
 
 ### 3. `pose_estimation.py`（主程序 — **必须重点看这里**）
 
@@ -106,8 +115,8 @@ python pose_estimation.py
 
 ---
 
-## GIF 演示（如何生成与在 README 中嵌入）
-！[坐标绘制效果](output_result_20251016_130043.gif)
+## GIF 演示
+![坐标绘制效果](output_result_20251016_130043.gif)
 * 同时程序自动保存一帧框选图，判断角点是否符合
-! [视频帧框选效果图](first_frame_detected.png)
+![视频帧框选效果图](first_frame_detected.png)
 
