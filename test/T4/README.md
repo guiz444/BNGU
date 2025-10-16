@@ -1,11 +1,12 @@
 #  Black Shape 3D Pose Detection System
 
-##本项目基于 **OpenCV + Python**，实现了从视频或摄像头画面中检测黄色背景上的黑色方块，并通过 `solvePnP` 计算物体的三维位姿，在画面中实时绘制 3D 坐标轴。
+## 本项目基于 **OpenCV + Python**，实现了从视频或摄像头画面中检测黄色背景上的黑色方块，并通过 `solvePnP` 计算物体的三维位姿，在画面中实时绘制 3D 坐标轴。
 
-##目标
+## 目标
 ![金矿石](2d.png)
 > 注意此文件中的HSV分割范围由T1中的exact tool函数提取
 > ![分割结果](HSV.png)
+
 ---
 
 ## 主要功能
@@ -65,7 +66,7 @@ pip install opencv-python numpy imageio
 
 ---
 
-### 3. `pose_estimation.py`（主程序 — **必须重点看这里**）
+### 3. `pose_estimation.py`（主程序 — **重点**）
 
 功能概览：
 
@@ -111,12 +112,23 @@ python pose_estimation.py
 
 * `first_frame_detected.png`（首次检测到四个角点时保存）
 * `output_result.mp4`（带坐标轴的输出视频）
-* 若你手动生成 GIF：`demo.gif`（可放入仓库并在 README 中展示）
 
 ---
 
 ## GIF 演示
+### 坐标绘制效果
 ![坐标绘制效果](output_result_20251016_130043.gif)
 * 同时程序自动保存一帧框选图，判断角点是否符合
+### 视频帧框选效果
 ![视频帧框选效果图](first_frame_detected.png)
+
+---
+## ⚖️ 参数调节说明
+
+| 参数 | 含义 | 推荐值 | 说明 |
+|:--|:--|:--|:--|
+| `jump_threshold` | 单帧跳动距离阈值 | 40~60 | 单位为像素，值越小越严格 |
+| `area_diff_ratio` | 面积差异比例阈值 | 0.3 | 方块面积波动超过该比例则丢弃 |
+| `axis_length` | 坐标轴长度 | 50 | 控制绘制轴的长度 |
+
 
