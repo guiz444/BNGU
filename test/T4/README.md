@@ -107,7 +107,7 @@ python pose_estimation.py
 ---
 
 ## GIF 演示（如何生成与在 README 中嵌入）
-！[坐标绘制效果](output_result.mp4)
+！[坐标绘制效果](output_result_20251016_130043.gif)
 * 同时程序自动保存一帧框选图，判断角点是否符合
-![框选效果图](yellow_squares_20251015_193540.png)
+! [视频帧框选效果图](first_frame_detected.png)
 
