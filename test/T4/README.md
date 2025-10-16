@@ -57,10 +57,10 @@ pip install opencv-python numpy imageio
 
 * 功能：实现 `detect_black_shapes_on_yellow()`、`sort_squares_corners()`、`filter_jumping_squares()`。
 * 主要特性：
-  ** 使用 HSV 空间分割黄色与黑色区域
-  ** 支持帧间跳动过滤与面积差异检测
-  ** 可处理图片路径或视频帧输入
-  ** 输出矩形框与排序后的方块坐标
+  - 使用 HSV 空间分割黄色与黑色区域
+  - 支持帧间跳动过滤与面积差异检测
+  - 可处理图片路径或视频帧输入
+  - 输出矩形框与排序后的方块坐标
 
 * 已修正与说明：
 
