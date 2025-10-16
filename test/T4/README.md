@@ -73,7 +73,7 @@ pip install opencv-python numpy imageio
 
 ---
 
-### 3. `pose_estimation.py`（主程序 — **重点**）
+### 3. `pnp.py`（主程序 — **重点**）
 
 功能概览：
 
